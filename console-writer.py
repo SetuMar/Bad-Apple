@@ -1,6 +1,6 @@
 import os
-import pywhatkit
 import time
+import custom_ascii_converter
 
 image_locations = None
 
@@ -19,15 +19,9 @@ time.sleep(3)
 
 for image_loc in sorted_image_location:
     full_path = 'video-frames/' + image_loc
-    text_file_name = image_loc.split('.')[0]
-    pywhatkit.image_to_ascii_art(full_path, text_file_name)
     
-    contents = open(text_file_name + '.txt')
+    custom_ascii_converter.generate_ascii_image(full_path, 15)
     
-    for w in contents:
-        print(w.strip('\n'))
-    
-    os.remove(text_file_name + '.txt')
-    
-    time.sleep(0.009)
-    os.system('clear')
+    time.sleep(0.02)
+
+print("VIDEO OVER. CLOSE THE CONSOLE, WEABOO")
