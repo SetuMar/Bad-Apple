@@ -11,7 +11,7 @@ def generate_ascii_image(path, height_division_amt):
 
     img_data = sized_image.getdata()
 
-    character = ['@', '#', 'S', '%', '?', '*', '+', ';', ':', ',', '.']
+    character = ['.', ',', ':', ';', '+', '*', '?', '%', 'S', '#', '@']
 
     output = ""
 
