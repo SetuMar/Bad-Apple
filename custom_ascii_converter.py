@@ -26,5 +26,3 @@ def generate_ascii_image(path, height_division_amt):
         if index % image_width == 0:
             print(output[last:index])
             last = index
-
-generate_ascii_image('video-frames/frame4991.jpg', 15)
