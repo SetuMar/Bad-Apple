@@ -1,28 +1,21 @@
-import PIL.Image as pillow
-import copy
+from PIL import Image
+
+
+characters = '@#S%?*+;:,.'
+# to invert colors, just reverse characters:
+# character = '.,:;+*?%S#@'
 
 def generate_ascii_image(path, height_division_amt):
-    image = pillow.open(path)
+    image = Image.open(path)
+    width_division_amt = height_division_amt / 2
+    image = image.resize((int(image.width / width_division_amt), int(image.height / height_division_amt)))
+    image_width = image.width
 
-    height_division_amt = height_division_amt
-    width_division_amt = height_division_amt/2
+    # O(n) concatenated list of characters, its better then "str += str",
+    # https://peps.python.org/pep-0008/#programming-recommendations
+    output = ''.join([characters[p[0] // 25] for p in image.getdata()])
 
-    sized_image = image.resize((int(image.width/width_division_amt), int(image.height/height_division_amt)))
-
-    img_data = sized_image.getdata()
-
-    character = ['@', '#', 'S', '%', '?', '*', '+', ';', ':', ',', '.']
-
-    output = ""
-
-    for p in img_data:
-        output += character[p[0]//25]
-        
-    image_width = sized_image.width
-
-    last = 0
-
-    for index, char in enumerate(copy.copy(output)):
-        if index % image_width == 0:
-            print(output[last:index])
-            last = index
+    # '\n'.join([]) instead of print every line of frame separately
+    # It makes a list of strings, each lenght string is equal to the width of the frame
+    output = '\n'.join([output[i:i + image_width] for i in range(0, len(output), image_width)])
+    return output
